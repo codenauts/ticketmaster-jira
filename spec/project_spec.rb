@@ -26,7 +26,12 @@ describe "TicketMaster::Provider::Jira::Project" do
   it "should be able to load a single project based on id" do
     project = @tm.project(1)
     project.should be_an_instance_of(@klass)
+    project.name.should == 'project'
   end
 
-  it "should be able to load a single project by attributes"
+  it "should be able to load a single project by attributes" do
+    project = @tm.project(:id => 1)
+    project.should be_an_instance_of(@klass)
+    project.name.should == 'project'
+  end
 end
