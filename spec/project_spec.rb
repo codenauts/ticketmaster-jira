@@ -4,7 +4,7 @@ describe "TicketMaster::Provider::Jira::Project" do
   before(:each) do
     @url = "some_url"
     @fj = FakeJiraTool.new
-    @project = Struct.new(:name, :description)
+    @project = Struct.new(:id, :name, :description).new(1, 'project', 'project description')
     Jira4R::JiraTool.stub!(:new).with(2, @url).and_return(@fj)
     @fj.stub!(:getProjectsNoSchemes).and_return([@project, @project])
     @tm = TicketMaster.new(:jira, :username => 'testuser', :password => 'testuser', :url => @url)
