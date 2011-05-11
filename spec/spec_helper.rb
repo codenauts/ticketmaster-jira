@@ -1,9 +1,6 @@
 $:.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
 require 'ticketmaster/jira'
-
-Rspec.configure do |config|
-  config.mock_framework = :rspec
-end
+require 'rspec/expectations'
 
 class FakeJiraTool
   attr_accessor :call_stack, :returns
@@ -18,3 +15,8 @@ class FakeJiraTool
     @returns.delete(args.first) if @returns.key?(args.first)
   end
 end
+
+RSpec.configure do |config|
+  config.mock_framework = :rspec
+end
+

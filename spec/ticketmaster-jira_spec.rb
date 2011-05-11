@@ -1,10 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "TicketMaster::Provider::Jira" do 
-  before(:all) do 
+  before(:each) do
     @url = "some_url"
     @fj = FakeJiraTool.new
-    Jira4R::JiraTool.should_receive(:new).with(2, @url).and_return(@fj)
+    Jira4R::JiraTool.stub!(:new).with(2, @url).and_return(@fj)
   end
 
   it "should be able to instantiate a new ticketmaster instance" do
