@@ -6,66 +6,43 @@ module TicketMaster::Provider
     class Ticket < TicketMaster::Provider::Base::Ticket
       #API = Jira::Ticket # The class to access the api's tickets
       # declare needed overloaded methods here
-      def initialize(native)
-        native = native.kind_of?(API) ? native.issue : native
-        @system = :jira
-        @system_data = {
-          :client => Client.new(native)
-        }
-        super(@system_data[:client].attributes)
-      end
-
-      class Client
-        def initialize(native)
-          @native = native
-        end
-        
-        def attributes
-          {
-            "id" => @native.id,
-            "status" => @native.status,
-            "priority" => @native.priority,
-            "title" => @native.summary,
-            "resolution" => @native.resolution,
-            "created_at" => @native.created,
-            "update_at" => @native.updated,
-            "description" => @native.description,
-            "assignee" => @native.assignee,
-            "requestor" => @native.reporter
-          }
-        end
-      end
-      class API
-        attr_reader :issue
-        def initialize(options)
-          @options = options
-          @issue = Jira4R::V2::RemoteIssue.new
-          for key, value in options
-            @issue.send("#{key}=",value) if @issue.respond_to?("#{key}=")
+      def initialize(*object)
+        if object.first
+          object = object.first
+          unless object.is_a? Hash
+            @system_data = {:client => object}
+            hash = {:id => object.id, 
+              :status => object.status,
+              :priority => object.priority,
+              :title => object.summary,
+              :resolution => object.resolution,
+              :created_at => object.created,
+              :update_at => object.updated,
+              :description => object.description,
+              :assignee => object.assignee,
+              :requestor => object.reporter}
+          else
+            hash = object
           end
-          puts "issue: #{@issue.inspect}"
-        end
-
-        def save
-          Ticket.new($jira.createIssue(@issue))
-        end
-
-        class << self
-          def find(by, options)
-            case by
-            when :all, "all"
-              $jira.getIssuesFromJqlSearch("project = #{options[:params][:project_id]}", 25).map(&method(:wrap))
-            else
-              raise "don't understand query #{by}"
-            end
-          end
-
-          def wrap(native)
-            Ticket.new(native)
-          end
+          super(hash)
         end
       end
 
-    end
+      def self.find_by_attributes(project_id, attributes = {})
+        search_by_attribute(self.find_all(project_id), attributes)
+      end
+
+      def self.find_by_id(project_id, id)
+        self.find_all(project_id).select { |ticket| ticket.id == id }.first
+      end
+
+      def self.find_all(project_id)
+        $jira.getIssuesFromTextSearchWithProject("project = #{project_id}", 25).map do |ticket|
+          self.new ticket
+        end
+      end
+
+   end
+
   end
 end
