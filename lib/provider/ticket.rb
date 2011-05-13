@@ -37,7 +37,7 @@ module TicketMaster::Provider
       end
 
       def self.find_all(project_id)
-        $jira.getIssuesFromTextSearchWithProject("project = #{project_id}", 25).map do |ticket|
+        $jira.getIssuesFromTextSearchWithLimit("project = #{project_id}").map do |ticket|
           self.new ticket
         end
       end
