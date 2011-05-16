@@ -9,11 +9,33 @@ module TicketMaster::Provider
       #API = Jira::Comment # The class to access the api's comments
       # declare needed overloaded methods here
       
-      class API
-        def find(*args)
-          puts "ARGS: #{args.join(", ")}"
-          []
+      def initialize(*object)
+        if object.first
+          object = object.first
+          unless object.is_a? Hash
+            @system_data = {:client => object}
+            hash = {:id => object.id, 
+              :author => object.author,
+              :body => object.body,
+              :created_at => object.created,
+              :updated_at => object.updated,
+              :ticket_id => object.ticket_id,
+              :project_id => object.project_id}
+          else
+            hash = object
+          end
+          super(hash)
         end
+      end
+
+      def self.find(project_id, ticket_id, *options)
+        if options.first.empty?
+          self.find_all(project_id, ticket_id)
+        end
+      end
+
+      def self.find_all(project_id, ticket_id)
+        $jira.getComments("project = #{project_id}, ticket = #{ticket_id}", 200).map { |comment| self.new comment }
       end
     end
   end

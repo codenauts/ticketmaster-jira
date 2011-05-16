@@ -42,6 +42,10 @@ module TicketMaster::Provider
         end
       end
 
+      def comments(*options)
+        Comment.find(self.project_id, self.ticket_id, options)
+      end
+
    end
 
   end
