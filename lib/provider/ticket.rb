@@ -11,7 +11,7 @@ module TicketMaster::Provider
           object = object.first
           unless object.is_a? Hash
             @system_data = {:client => object}
-            hash = {:id => object.id, 
+            hash = {:id => object.id.to_i, 
               :status => object.status,
               :priority => object.priority,
               :title => object.summary,
