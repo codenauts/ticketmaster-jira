@@ -16,7 +16,7 @@ describe "TicketMaster::Provider::Jira::Ticket" do
     Jira4R::JiraTool.stub!(:new).with(2, @url).and_return(@fj)
     @fj.stub!(:getProjectsNoSchemes).and_return([@project_jira, @project_jira])
     @fj.stub!(:getProjectById).and_return(@project_jira)
-    @fj.stub!(:getIssuesFromTextSearchWithLimit).and_return([@ticket])
+    @fj.stub!(:getIssuesFromJqlSearch).and_return([@ticket])
     @tm = TicketMaster.new(:jira, :username => 'testuser', :password => 'testuser', :url => @url)
     @project_tm = @tm.projects.first
     @klass = TicketMaster::Provider::Jira::Ticket
