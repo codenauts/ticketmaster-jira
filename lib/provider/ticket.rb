@@ -17,7 +17,7 @@ module TicketMaster::Provider
               :title => object.summary,
               :resolution => object.resolution,
               :created_at => object.created,
-              :update_at => object.updated,
+              :updated_at => object.updated,
               :description => object.description,
               :assignee => object.assignee,
               :requestor => object.reporter}

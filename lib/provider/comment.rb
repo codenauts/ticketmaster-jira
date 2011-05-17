@@ -35,7 +35,7 @@ module TicketMaster::Provider
       end
 
       def self.find_all(project_id, ticket_id)
-        $jira.getComments("project = #{project_id}, ticket = #{ticket_id}", 200).map { |comment| self.new comment }
+        $jira.getComments("ticket = #{ticket_id}", 200).map { |comment| self.new comment }
       end
     end
   end
