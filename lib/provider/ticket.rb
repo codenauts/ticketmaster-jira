@@ -28,6 +28,10 @@ module TicketMaster::Provider
         end
       end
 
+      def updated_at
+        normalize_datetime(self[:updated_at])
+      end
+
       def self.find_by_attributes(project_id, attributes = {})
         search_by_attribute(self.find_all(project_id), attributes)
       end
@@ -44,6 +48,11 @@ module TicketMaster::Provider
 
       def comments(*options)
         Comment.find(self.project_id, self.ticket_id, options)
+      end
+      
+      private
+      def normalize_datetime(datetime)
+        Time.mktime(datetime.year, datetime.month, datetime.day, datetime.hour, datetime.min, datetime.sec)
       end
 
    end
