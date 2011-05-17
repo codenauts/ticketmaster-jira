@@ -4,7 +4,7 @@ describe "TicketMaster::Provider::Jira::Ticket" do
   before(:each) do
     @url = "some_url"
     @fj = FakeJiraTool.new
-    @project_jira = Struct.new(:id, :name, :description, :created, :updated).new(1, 'project', 'project description', Time.now, Time.now)
+    @project_jira = Struct.new(:id, :name, :description).new(1, 'project', 'project description')
     @ticket = Struct.new(:id, 
                          :status, 
                          :priority, 

@@ -14,9 +14,7 @@ module TicketMaster::Provider
             @system_data = {:client => object}
             hash = {:id => object.id.to_i, 
                     :name => object.name,
-                    :description => object.description,
-                    :created_at => object.created,
-                    :updated_at => object.updated}
+                    :description => object.description}
           else
             hash = object
           end
@@ -52,7 +50,9 @@ module TicketMaster::Provider
       end
 
       def self.find_all
-        $jira.getProjectsNoSchemes().map { |project| Project.new project }
+        $jira.getProjectsNoSchemes().map do |project| 
+          Project.new project 
+        end
       end
 
       def self.find_by_id(id)
