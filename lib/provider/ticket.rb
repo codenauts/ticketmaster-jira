@@ -51,7 +51,11 @@ module TicketMaster::Provider
       end
 
       def comments(*options)
-        Comment.find(self.project_id, self.ticket_id, options)
+        []
+      end
+
+      def comment(*options)
+        nil
       end
       
       private
