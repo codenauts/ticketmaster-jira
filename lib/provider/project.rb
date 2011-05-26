@@ -47,8 +47,7 @@ module TicketMaster::Provider
       end
 
       def self.find_by_attributes(attributes = {})
-        jira_projects = self.find_all
-        search_by_attribute(jira_projects, attributes)
+        search_by_attribute(self.find_all, attributes)
       end
 
       def self.find_all
