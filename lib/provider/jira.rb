@@ -28,6 +28,10 @@ module TicketMaster::Provider
         Project.find_by_attributes(options.first).first
       end
     end
+
+    def projects(*options)
+      Project.find(options)
+    end
   end
 end
 
