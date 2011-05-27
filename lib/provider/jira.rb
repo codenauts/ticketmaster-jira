@@ -22,6 +22,9 @@ module TicketMaster::Provider
     # declare needed overloaded methods here
     
     def project(*options)
+      if options.first.is_a? String
+        options[0] = options[0].to_i
+      end
       if options.first.is_a? Fixnum
         Project.find_by_id(options.first)
       elsif options.first.is_a? Hash
