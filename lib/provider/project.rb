@@ -24,6 +24,10 @@ module TicketMaster::Provider
         end
       end
 
+      def id
+        self[:id].to_i
+      end
+
       def copy(project)
         project.tickets.each do |ticket|
           copy_ticket = self.ticket!(:title => ticket.title, :description => ticket.description)
