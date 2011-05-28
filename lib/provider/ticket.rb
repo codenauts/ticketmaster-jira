@@ -28,6 +28,10 @@ module TicketMaster::Provider
         end
       end
 
+      def id
+        self[:id].to_i
+      end
+
       def updated_at
         normalize_datetime(self[:updated_at])
       end
