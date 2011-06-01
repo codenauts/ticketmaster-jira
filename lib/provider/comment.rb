@@ -28,18 +28,14 @@ module TicketMaster::Provider
         end
       end
 
-      def self.find(project_id, ticket_id, *options)
+      def self.find(ticket_id, *options)
         if options.first.empty?
-          self.find_all(project_id, ticket_id)
+          self.find_all(ticket_id)
         end
       end
 
-      def self.find_all(project_id, ticket_id)
-        begin
-          $jira.getComments(ticket_id).map { |comment| self.new comment }
-        rescue
-          [TicketMaster::Provider::Jira::Comment]
-        end
+      def self.find_all(ticket_id)
+        $jira.getComments("#{ticket_id}").map { |comment| self.new comment }
       end
     end
   end

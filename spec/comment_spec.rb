@@ -31,7 +31,6 @@ describe "TicketMaster::Provider::Jira::Comment" do
   end
 
   it "should be able to load all comments" do 
-    pending
     @ticket.comments.should be_an_instance_of(Array)
     @ticket.comments.first.should be_an_instance_of(@klass)
   end
