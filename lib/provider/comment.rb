@@ -35,7 +35,11 @@ module TicketMaster::Provider
       end
 
       def self.find_all(ticket_id)
-        $jira.getComments("#{ticket_id}").map { |comment| self.new comment }
+        begin 
+          $jira.getComments("#{ticket_id}").map { |comment| self.new comment }
+        rescue
+          []
+        end
       end
     end
   end
