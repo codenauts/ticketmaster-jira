@@ -13,33 +13,33 @@ GEM
     diff-lcs (1.1.2)
     git (1.2.5)
     hashie (1.0.0)
-    httpclient (2.2.0.2)
+    httpclient (2.2.1)
     i18n (0.5.0)
-    jeweler (1.6.0)
-      bundler (~> 1.0.0)
+    jeweler (1.6.2)
+      bundler (~> 1.0)
       git (>= 1.2.5)
       rake
     jira4r-jh (0.4.0)
       soap4r
       soap4r
-    rake (0.8.7)
+    rake (0.9.1)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
       rspec-expectations (~> 2.6.0)
       rspec-mocks (~> 2.6.0)
-    rspec-core (2.6.0)
+    rspec-core (2.6.3)
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
     soap4r (1.5.8)
       httpclient (>= 2.1.1)
-    ticketmaster (0.5.6)
+    ticketmaster (0.6.6)
       activeresource
       activeresource (>= 2.3.2)
-      activesupport
       activesupport (>= 2.3.2)
-      hashie (= 1.0.0)
+      activesupport
       hashie
+      hashie (= 1.0.0)
       jeweler
 
 PLATFORMS

@@ -15,12 +15,17 @@ module TicketMaster::Provider
     def authorize(auth = {})
       @authentication ||= TicketMaster::Authenticator.new(auth)
       $jira = Jira4R::JiraTool.new(2,@authentication.url)
-      $jira.login(@authentication.username, @authentication.password)
+      begin 
+        $jira.login(@authentication.username, @authentication.password)
+        @valid_auth = true
+      rescue
+        @valid_auth = false
+      end
       # Set authentication parameters for whatever you're using to access the API
     end
-    
+
     # declare needed overloaded methods here
-    
+
     def project(*options)
       if options.first.is_a? String
         options[0] = options[0].to_i
@@ -34,6 +39,10 @@ module TicketMaster::Provider
 
     def projects(*options)
       Project.find(options)
+    end
+
+    def valid?
+      @valid_auth
     end
   end
 end
