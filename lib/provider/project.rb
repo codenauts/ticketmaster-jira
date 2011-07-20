@@ -13,6 +13,7 @@ module TicketMaster::Provider
           unless object.is_a? Hash
             @system_data = {:client => object}
             hash = {:id => object.id.to_i, 
+                    :key => object.key,
                     :name => object.name,
                     :description => object.description,
                     :updated_at => nil,
@@ -36,6 +37,11 @@ module TicketMaster::Provider
             sleep 1
           end
         end
+      end
+      
+      def ticket!(*options)
+        options[0].merge!(:project_id => id, :project_key => key) if options.first.is_a?(Hash)
+        provider_parent(self.class)::Ticket.create(*options)
       end
 
       def self.find(*options)

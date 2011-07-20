@@ -12,6 +12,7 @@ module TicketMaster::Provider
           unless object.is_a? Hash
             @system_data = {:client => object}
             hash = {:id => object.id.to_i, 
+              :key => object.key,
               :status => object.status,
               :priority => object.priority,
               :title => object.summary,
@@ -60,6 +61,20 @@ module TicketMaster::Provider
 
       def comment(*options)
         nil
+      end
+      
+      def self.create(*options)
+        attributes = options.first
+        
+        issue = Jira4R::V2::RemoteIssue.new
+        issue.summary = attributes[:title]
+        issue.description = attributes[:description]
+        issue.project = attributes[:project_key]
+        issue.type = "1"
+        result = $jira.createIssue(issue)
+        
+        return nil if result.nil? or result.id.nil?
+        return self.find_by_id(attributes[:project_id].to_i, result.id.to_i)
       end
       
       private
