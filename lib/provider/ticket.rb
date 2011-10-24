@@ -74,7 +74,7 @@ module TicketMaster::Provider
         result = $jira.createIssue(issue)
         
         return nil if result.nil? or result.id.nil?
-        return self.find_by_id(attributes[:project_id].to_i, result.id.to_i)
+        return result
       end
       
       private
