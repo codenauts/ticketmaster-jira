@@ -50,7 +50,7 @@ module TicketMaster::Provider
       end
 
       def self.find_all_with_query(project_id, query)
-        $jira.getIssuesFromJqlSearch("project = #{project_id} and title ~ #{query} and description ~ #{query}", 200).map do |ticket|
+        $jira.getIssuesFromJqlSearch("project = #{project_id} and summary ~ #{query} and description ~ #{query}", 200).map do |ticket|
           self.new ticket
         end
       end
