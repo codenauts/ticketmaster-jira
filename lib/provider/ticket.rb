@@ -76,6 +76,7 @@ module TicketMaster::Provider
         issue.summary = attributes[:title]
         issue.description = attributes[:description]
         issue.project = attributes[:project_key]
+        issue.priority = attributes[:priority] if attributes[:priority].present?
         issue.type = "1"
         result = $jira.createIssue(issue)
         
