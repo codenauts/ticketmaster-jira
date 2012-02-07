@@ -16,8 +16,8 @@ module TicketMaster::Provider
       @authentication ||= TicketMaster::Authenticator.new(auth)
       $jira = Jira4R::JiraTool.new(2,@authentication.url)
       begin 
-        $jira.login(@authentication.username, @authentication.password)
         $jira.driver.options["protocol.http.ssl_config.verify_mode"] = nil
+        $jira.login(@authentication.username, @authentication.password)
         @valid_auth = true
       rescue
         @valid_auth = false
