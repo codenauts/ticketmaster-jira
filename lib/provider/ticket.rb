@@ -77,6 +77,16 @@ module TicketMaster::Provider
         issue.description = attributes[:description]
         issue.project = attributes[:project_key]
         issue.priority = attributes[:priority] if attributes[:priority].present?
+        
+        if attributes[:components].present?
+          components = Jira4R::V2::ArrayOf_tns1_RemoteComponent.new 
+          attributes[:components].each do |id|
+            component = Jira4R::V2::RemoteComponent.new(id)
+            components.push(component)
+          end
+          issue.components = components
+        end
+        
         issue.type = "1"
         result = $jira.createIssue(issue)
         

@@ -43,6 +43,10 @@ module TicketMaster::Provider
         options[0].merge!(:project_id => id, :project_key => key) if options.first.is_a?(Hash)
         provider_parent(self.class)::Ticket.create(*options)
       end
+      
+      def components()
+        $jira.getComponents(key)
+      end
 
       def self.find(*options)
         if options[0].first.is_a? Array
