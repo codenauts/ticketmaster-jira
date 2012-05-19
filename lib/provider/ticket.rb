@@ -46,7 +46,11 @@ module TicketMaster::Provider
       end
 
       def self.find_by_id(project_id, id)
-        self.find_all(project_id).select { |ticket| ticket.id == id }.first
+        if id.kind_of?(String)
+          $jira.getIssue(id)
+        else
+          self.find_all(project_id).select { |ticket| ticket.id == id }.first
+        end
       end
 
       def self.find_all_with_query(project_id, query)
