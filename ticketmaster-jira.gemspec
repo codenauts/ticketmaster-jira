@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary       = %q{TicketMaster binding for JIRA}
   s.description   = %q{Interact with Atlassian JIRA ticketing system from Ruby}
   s.add_dependency  'ticketmaster'
-  s.add_dependency  'jira4r-jh'
+  s.add_dependency  'jira4r-jh-ruby1.9'
   s.add_development_dependency  'rspec', '>=2.0.0'
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

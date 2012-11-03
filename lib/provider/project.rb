@@ -29,6 +29,10 @@ module TicketMaster::Provider
         self[:id].to_i
       end
 
+      def key
+        self[:key].to_s
+      end
+
       def copy(project)
         project.tickets.each do |ticket|
           copy_ticket = self.ticket!(:title => ticket.title, :description => ticket.description)
@@ -65,7 +69,7 @@ module TicketMaster::Provider
       end
 
       def self.find_all
-        $jira.getProjectsNoSchemes().map do |project| 
+        $jira.getProjectsNoSchemes.getProjectsNoSchemesReturn.map do |project| 
           Project.new project 
         end
       end
